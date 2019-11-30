@@ -1,27 +1,25 @@
 package main
 
 import (
+	"bufio"
 	"encoding/csv"
 	"fmt"
 	"io"
 	"log"
-	"bufio"
 	"os"
-	"time"
 	"strconv"
+	"time"
 )
 
 func check(err error) {
-    if err != nil {
+	if err != nil {
 		log.Fatal(err)
-        // panic(err)
-    }
+	}
 }
 
 func main() {
-    if (len(os.Args) <1 ) {
-		fmt.Println("need to pass in the name of the csv file")
-		os.Exit(1)
+	if len(os.Args) < 2 {
+		log.Fatal("need to pass in the name of the csv file")
 	}
 	filename := os.Args[1]
 	csvStuff(filename)
@@ -48,12 +46,10 @@ func csvStuff(filename string) {
 		formattedDate := date.Format(outLayout)
 		creditDebit := "debit"
 		moneyOut, err := strconv.ParseFloat(record[3], 64)
-		if (err != nil) {
+		if err != nil {
 			creditDebit = "credit"
 		}
-		// check(err)
 		moneyIn, err := strconv.ParseFloat(record[2], 64)
-		// check(err)
 		fmt.Printf("\"")
 		fmt.Printf(formattedDate)
 		fmt.Printf("\",\"")
@@ -61,7 +57,7 @@ func csvStuff(filename string) {
 		fmt.Printf("\",\"")
 		fmt.Printf(record[1])
 		fmt.Printf("\",\"")
-		fmt.Printf("%f",moneyIn-moneyOut)
+		fmt.Printf("%f", moneyIn-moneyOut)
 		fmt.Printf("\",\"")
 		fmt.Printf(creditDebit)
 		fmt.Printf("\",\"")
