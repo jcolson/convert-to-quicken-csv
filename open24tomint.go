@@ -8,6 +8,7 @@ import (
 	"log"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -45,11 +46,11 @@ func csvStuff(filename string) {
 		check(err)
 		formattedDate := date.Format(outLayout)
 		creditDebit := "debit"
-		moneyOut, err := strconv.ParseFloat(record[3], 64)
+		moneyOut, err := strconv.ParseFloat(strings.Replace(record[3], ",", "", -1), 64)
 		if err != nil {
 			creditDebit = "credit"
 		}
-		moneyIn, err := strconv.ParseFloat(record[2], 64)
+		moneyIn, err := strconv.ParseFloat(strings.Replace(record[2], ",", "", -1), 64)
 		fmt.Printf("\"")
 		fmt.Printf(formattedDate)
 		fmt.Printf("\",\"")
