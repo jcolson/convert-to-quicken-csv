@@ -1,5 +1,10 @@
 # open24tomint
 
+## Build status
+
+![Go](https://github.com/jcolson/permanenttsb-csv-to-mint-csv/workflows/Go/badge.svg)
+
+
 ## Quicken is a total PITA!
 
 If your bank doesn't pay Quicken/Intuit, they basically try to do everything in their power to disable you from importing transactions.
