@@ -1,0 +1,17 @@
+Completed Date ; Description ; Paid Out (EUR) ; Paid In (EUR) ; Exchange Out; Exchange In; Balance (EUR); Category; Notes
+Jun 22, 2020 ; To John Doe  ; 200.00 ;  ;  ;  ; 350.00; Transfers; 
+Jun 18, 2020 ; Top-Up by *1957 Fee: 5.84 ;  ; 350.00 ;  ;  ; 550.00; General; 
+Jun 15, 2020 ; To John Doe  ; 50.00 ;  ;  ;  ; 200.00; Transfers; Deposit for desk
+Jun 15, 2020 ; Top-Up by *1957 Fee: 4.17 ;  ; 250.00 ;  ;  ; 250.00; General; 
+Jun 9, 2020 ; To John Hancock  ; 50.00 ;  ;  ;  ; 0.00; Transfers; Deposit for table
+Jun 9, 2020 ; Top-Up by *1957 Fee: 0.65 ;  ; 39.10 ;  ;  ; 50.00; General; 
+Sep 15, 2019 ; To Ray Fen  ; 40.00 ;  ;  ;  ; 10.90; Transfers; 
+Sep 13, 2019 ; To Ray Fen  ; 50.00 ;  ;  ;  ; 50.90; Transfers; 
+Sep 11, 2019 ; The Pub  ; 53.50 ;  ;  ;  ; 100.90; Restaurants; 
+Sep 8, 2019 ; Top-up via Google Pay Fee: 1.66 ;  ; 90.00 ;  ;  ; 154.40; General; 
+Sep 8, 2019 ; To Ray Fen  ; 130.00 ;  ;  ;  ; 64.40; Transfers; 
+Sep 8, 2019 ; Exchange  to EUR FX Rate €1 = $1.1086 ;  ; 180.39 ;  USD 200.00 ;  ; 194.40; General; 
+Aug 19, 2019 ; To Ray Fen  ; 10.00 ;  ;  ;  ; 14.01; Transfers; 
+Aug 17, 2019 ; From Ray Fen  ;  ; 5.00 ;  ;  ; 24.01; Transfers; 
+Aug 17, 2019 ; To Ray Fen  ; 15.00 ;  ;  ;  ; 19.01; Transfers; 
+Aug 17, 2019 ; Top-up via Google Pay  ;  ; 30.00 ;  ;  ; 34.01; General; 

@@ -19,12 +19,14 @@ OFX files can't be imported into an account (unless your bank pays quicken) - as
 "Quicken is unable to update this account because Web Connect support for your financial institution has been either temporarily, or permanently discontinued [CC-885]."
 ```
 
-## This app
+## Application usage
 
-This app is primarily used to convert csv files from the Permanent TSB (open24.ie) to the Mint CSV format,
-which is importable into Quicken.
+This app is for converting certain csv formats to something that quicken will 'allow' to import (the Mint CSV format).
 
-It also allows the conversion of Banktivity (Mac financial mgmt application, like Quicken) CSV exports into mint csv format for importing into quicken.
+Formats that can be converted
+* Permanent TSB
+* Banktivity (Mac financial mgmt application, like Quicken)
+* Revolut exports
 
 ## how to build:
 ```
@@ -39,6 +41,6 @@ Usage of ./permanenttsb-csv-to-mint-csv:
   -input string
     	The csv input file to read (default "examplepermtsb.csv")
   -type string
-    	Input format type.  Available options: open24, banktivity (default "open24")
+    	Input format type.  Available options: open24, banktivity, revolut (default "open24")
 ```
 

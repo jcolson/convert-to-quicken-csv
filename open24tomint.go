@@ -15,7 +15,7 @@ import (
 
 var helpFlag = flag.Bool("h", false, "Help")
 var csvInputFlag = flag.String("input", "examplepermtsb.csv", "The csv input file to read")
-var inputTypeFlag = flag.String("type", "open24", "Input format type.  Available options: open24, banktivity")
+var inputTypeFlag = flag.String("type", "open24", "Input format type.  Available options: open24, banktivity, revolut")
 
 func check(err error) {
 	if err != nil {
@@ -35,6 +35,61 @@ func main() {
 		open24CsvStuff(filename)
 	} else if *inputTypeFlag == "banktivity" {
 		banktivityCsvStuff(filename)
+	} else if *inputTypeFlag == "revolut" {
+		revolutCsvStuff(filename)
+	}
+}
+
+func revolutCsvStuff(filename string) {
+	inLayout := "Jan 2, 2006"
+	outLayout := "01/02/2006"
+	f, err := os.Open(filename)
+	check(err)
+	fileReader := bufio.NewReader(f)
+	r := csv.NewReader(fileReader)
+	r.Comma = ';'
+	//read header line first and ignore it
+	r.Read()
+	fmt.Println("Date,Payee,FI Payee,Amount,CreditDebit,Category")
+	for {
+		record, err := r.Read()
+		if err == io.EOF {
+			break
+		}
+		check(err)
+		date, err := time.Parse(inLayout, strings.TrimSpace(record[0]))
+		check(err)
+		formattedDate := date.Format(outLayout)
+		creditDebit := "x"
+		moneyOut, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[2]), ",", "", -1), 64)
+		if err != nil {
+			creditDebit = "credit"
+		}
+		moneyIn, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[3]), ",", "", -1), 64)
+		if err != nil {
+			creditDebit = "debit"
+		}
+		if creditDebit == "x" {
+			moneyOut, err = strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[4]), ",", "", -1), 64)
+			if err != nil {
+				creditDebit = "credit"
+				moneyIn, err = strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[5]), ",", "", -1), 64)
+			}
+		}
+		amount := moneyIn - moneyOut
+		fmt.Printf("\"")
+		fmt.Printf(formattedDate)
+		fmt.Printf("\",\"")
+		fmt.Printf(strings.TrimSpace(record[1]))
+		fmt.Printf("\",\"")
+		fmt.Printf(strings.TrimSpace(record[8]))
+		fmt.Printf("\",\"")
+		fmt.Printf("%f", amount)
+		fmt.Printf("\",\"")
+		fmt.Printf(creditDebit)
+		fmt.Printf("\",\"")
+		fmt.Printf("\"")
+		fmt.Printf("\n")
 	}
 }
 
