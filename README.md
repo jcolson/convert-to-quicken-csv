@@ -2,7 +2,7 @@
 
 ## Build status
 
-![Go](https://github.com/jcolson/permanenttsb-csv-to-mint-csv/workflows/Go/badge.svg)
+![Go](https://github.com/jcolson/convert-to-quicken-csv/workflows/Go/badge.svg)
 
 
 ## Quicken is a total PITA!
@@ -36,7 +36,7 @@ go build
 ## Help on running
 
 ```
-Usage of ./permanenttsb-csv-to-mint-csv:
+Usage of ./convert-to-quicken-csv:
   -h	Help
   -input string
     	The csv input file to read (default "examplepermtsb.csv")
