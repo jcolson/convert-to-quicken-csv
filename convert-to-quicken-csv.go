@@ -164,18 +164,24 @@ func open24CsvStuff(filename string) {
 		check(err)
 		formattedDate := date.Format(outLayout)
 		creditDebit := "debit"
-		moneyOut, err := strconv.ParseFloat(strings.Replace(record[3], ",", "", -1), 64)
+		columnIncrement := 0
+		_, err = time.Parse(inLayout, record[1])
+		if err == nil {
+			// if this is a credit card file then there will be another date in column 1
+			columnIncrement = 1
+		}
+		moneyOut, err := strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
 		if err != nil {
 			creditDebit = "credit"
 		}
-		moneyIn, err := strconv.ParseFloat(strings.Replace(record[2], ",", "", -1), 64)
+		moneyIn, err := strconv.ParseFloat(strings.Replace(record[2+columnIncrement], ",", "", -1), 64)
 		amount := moneyIn - moneyOut
 		fmt.Printf("\"")
 		fmt.Printf(formattedDate)
 		fmt.Printf("\",\"")
-		fmt.Printf(record[1])
+		fmt.Printf(record[1+columnIncrement])
 		fmt.Printf("\",\"")
-		fmt.Printf(record[1])
+		fmt.Printf(record[1+columnIncrement])
 		fmt.Printf("\",\"")
 		fmt.Printf("%f", amount)
 		fmt.Printf("\",\"")
