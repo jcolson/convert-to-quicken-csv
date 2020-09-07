@@ -88,6 +88,7 @@ func revolutCsvStuff(filename string) {
 		fmt.Printf("\",\"")
 		fmt.Printf(creditDebit)
 		fmt.Printf("\",\"")
+		fmt.Printf(strings.TrimSpace(record[7]))
 		fmt.Printf("\"")
 		fmt.Printf("\n")
 	}
