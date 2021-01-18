@@ -30,7 +30,7 @@ Formats that can be converted
 
 ## how to build:
 ```
-go build
+go build convert-to-quicken-csv.go
 ```
 
 ## Help on running
