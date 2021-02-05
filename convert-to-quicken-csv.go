@@ -13,9 +13,13 @@ import (
 	"time"
 )
 
+var year, month, day = time.Now().AddDate(0, -1, 0).Date()
+var defaultMonthYear = fmt.Sprintf("%d%s%d", year, "/", month)
+var monthYearLayout = "2006/1"
 var helpFlag = flag.Bool("h", false, "Help")
 var csvInputFlag = flag.String("input", "examplepermtsb.csv", "The csv input file to read")
 var inputTypeFlag = flag.String("type", "open24", "Input format type.  Available options: open24, banktivity, revolut")
+var monthYearFlag = flag.String("dates", defaultMonthYear, "Year/Month, default is previous month")
 
 func check(err error) {
 	if err != nil {
@@ -31,8 +35,13 @@ func main() {
 		os.Exit(1)
 	}
 	filename := *csvInputFlag
+	// fmt.Printf("%s\n", *monthYearFlag)
+	// outLayout := "2006/02"
+	date, err := time.Parse(monthYearLayout, *monthYearFlag)
+	check(err)
+	// fmt.Printf("%s\n", date.Format(outLayout))
 	if *inputTypeFlag == "open24" {
-		open24CsvStuff(filename)
+		open24CsvStuff(filename, date)
 	} else if *inputTypeFlag == "banktivity" {
 		banktivityCsvStuff(filename)
 	} else if *inputTypeFlag == "revolut" {
@@ -145,7 +154,7 @@ func banktivityCsvStuff(filename string) {
 	}
 }
 
-func open24CsvStuff(filename string) {
+func open24CsvStuff(filename string, monthYear time.Time) {
 	inLayout := "02 Jan 06"
 	outLayout := "01/02/2006"
 	f, err := os.Open(filename)
@@ -163,32 +172,35 @@ func open24CsvStuff(filename string) {
 		check(err)
 		date, err := time.Parse(inLayout, record[0])
 		check(err)
-		formattedDate := date.Format(outLayout)
-		creditDebit := "debit"
-		columnIncrement := 0
-		_, err = time.Parse(inLayout, record[1])
-		if err == nil {
-			// if this is a credit card file then there will be another date in column 1
-			columnIncrement = 1
+		// fmt.Printf("%s == %s\n", monthYear.Format(monthYearLayout), date.Format(monthYearLayout))
+		if monthYear.Format(monthYearLayout) == date.Format(monthYearLayout) {
+			formattedDate := date.Format(outLayout)
+			creditDebit := "debit"
+			columnIncrement := 0
+			_, err = time.Parse(inLayout, record[1])
+			if err == nil {
+				// if this is a credit card file then there will be another date in column 1
+				columnIncrement = 1
+			}
+			moneyOut, err := strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
+			if err != nil {
+				creditDebit = "credit"
+			}
+			moneyIn, err := strconv.ParseFloat(strings.Replace(record[2+columnIncrement], ",", "", -1), 64)
+			amount := moneyIn - moneyOut
+			fmt.Printf("\"")
+			fmt.Printf(formattedDate)
+			fmt.Printf("\",\"")
+			fmt.Printf(record[1+columnIncrement])
+			fmt.Printf("\",\"")
+			fmt.Printf(record[1+columnIncrement])
+			fmt.Printf("\",\"")
+			fmt.Printf("%f", amount)
+			fmt.Printf("\",\"")
+			fmt.Printf(creditDebit)
+			fmt.Printf("\",\"")
+			fmt.Printf("\"")
+			fmt.Printf("\n")
 		}
-		moneyOut, err := strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
-		if err != nil {
-			creditDebit = "credit"
-		}
-		moneyIn, err := strconv.ParseFloat(strings.Replace(record[2+columnIncrement], ",", "", -1), 64)
-		amount := moneyIn - moneyOut
-		fmt.Printf("\"")
-		fmt.Printf(formattedDate)
-		fmt.Printf("\",\"")
-		fmt.Printf(record[1+columnIncrement])
-		fmt.Printf("\",\"")
-		fmt.Printf(record[1+columnIncrement])
-		fmt.Printf("\",\"")
-		fmt.Printf("%f", amount)
-		fmt.Printf("\",\"")
-		fmt.Printf(creditDebit)
-		fmt.Printf("\",\"")
-		fmt.Printf("\"")
-		fmt.Printf("\n")
 	}
 }
