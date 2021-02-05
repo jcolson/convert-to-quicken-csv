@@ -50,6 +50,14 @@ Formats that can be converted
 go build convert-to-quicken-csv.go
 ```
 
+Build for universal binary on big sur
+
+```sh
+GOOS=darwin GOARCH=amd64 go build -o convert-to-quicken-csv-amd64 convert-to-quicken-csv.go && \
+GOOS=darwin GOARCH=arm64 go build -o convert-to-quicken-csv-arm64 convert-to-quicken-csv.go && \
+lipo -create -output convert-to-quicken-csv convert-to-quicken-csv-amd64 convert-to-quicken-csv-arm64
+```
+
 ## Help on running
 
 ```sh
