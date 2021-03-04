@@ -35,11 +35,11 @@ func main() {
 		os.Exit(1)
 	}
 	filename := *csvInputFlag
-	// fmt.Printf("%s\n", *monthYearFlag)
+	// log.Printf("%s\n", *monthYearFlag)
 	// outLayout := "2006/02"
 	date, err := time.Parse(monthYearLayout, *monthYearFlag)
 	check(err)
-	// fmt.Printf("%s\n", date.Format(outLayout))
+	// log.Printf("%s\n", date.Format(outLayout))
 	if *inputTypeFlag == "open24" {
 		open24CsvStuff(filename, date)
 	} else if *inputTypeFlag == "banktivity" {
@@ -136,7 +136,7 @@ func banktivityCsvStuff(filename string) {
 			amountString := string([]rune(record[5])[1:])
 			amount, err = strconv.ParseFloat(strings.Replace(amountString, ",", "", -1), 64)
 		}
-		// fmt.Printf("currency %s\n", currency)
+		// log.Printf("currency %s\n", currency)
 		fmt.Printf("\"")
 		fmt.Printf(formattedDate)
 		fmt.Printf("\",\"")
@@ -177,7 +177,7 @@ func open24CsvStuff(filename string, monthYear time.Time) {
 		check(err)
 		date, err := time.Parse(inLayout, record[0])
 		check(err)
-		// fmt.Printf("%s == %s\n", monthYear.Format(monthYearLayout), date.Format(monthYearLayout))
+		// log.Printf("%s == %s\n", monthYear.Format(monthYearLayout), date.Format(monthYearLayout))
 		if monthYear.Format(monthYearLayout) == date.Format(monthYearLayout) {
 			formattedDate := date.Format(outLayout)
 			creditDebit := "credit"
@@ -189,7 +189,7 @@ func open24CsvStuff(filename string, monthYear time.Time) {
 				columnIncrement = 1
 			}
 			moneyIn, err := strconv.ParseFloat(strings.Replace(record[2+columnIncrement], ",", "", -1), 64)
-			fmt.Printf("moneyIn: %f\n", moneyIn)
+			// log.Printf("moneyIn: %f\n", moneyIn)
 			if err != nil || moneyIn == 0 {
 				moneyOut, err = strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
 				check(err)
