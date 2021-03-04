@@ -19,7 +19,7 @@ var monthYearLayout = "2006/1"
 var helpFlag = flag.Bool("h", false, "Help")
 var csvInputFlag = flag.String("input", "examplepermtsb.csv", "The csv input file to read")
 var inputTypeFlag = flag.String("type", "open24", "Input format type.  Available options: open24, banktivity, revolut")
-var monthYearFlag = flag.String("dates", defaultMonthYear, "Year/Month, default is previous month")
+var monthYearFlag = flag.String("dates", defaultMonthYear, "Year/Month for open24 files, default is previous month")
 
 func check(err error) {
 	if err != nil {
@@ -161,6 +161,8 @@ func open24CsvStuff(filename string, monthYear time.Time) {
 	check(err)
 	fileReader := bufio.NewReader(f)
 	r := csv.NewReader(fileReader)
+	// ignore field lengths (because open24 is a pita and doesn't output valid csv)
+	r.FieldsPerRecord = -1
 	//read header line first and ignore it
 	r.Read()
 	fmt.Println("Date,Payee,FI Payee,Amount,CreditDebit,Category")
@@ -169,24 +171,30 @@ func open24CsvStuff(filename string, monthYear time.Time) {
 		if err == io.EOF {
 			break
 		}
+		if len(record) < 4 {
+			continue // skip too short records
+		}
 		check(err)
 		date, err := time.Parse(inLayout, record[0])
 		check(err)
 		// fmt.Printf("%s == %s\n", monthYear.Format(monthYearLayout), date.Format(monthYearLayout))
 		if monthYear.Format(monthYearLayout) == date.Format(monthYearLayout) {
 			formattedDate := date.Format(outLayout)
-			creditDebit := "debit"
+			creditDebit := "credit"
 			columnIncrement := 0
+			moneyOut := float64(0)
 			_, err = time.Parse(inLayout, record[1])
 			if err == nil {
 				// if this is a credit card file then there will be another date in column 1
 				columnIncrement = 1
 			}
-			moneyOut, err := strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
-			if err != nil {
-				creditDebit = "credit"
-			}
 			moneyIn, err := strconv.ParseFloat(strings.Replace(record[2+columnIncrement], ",", "", -1), 64)
+			fmt.Printf("moneyIn: %f\n", moneyIn)
+			if err != nil || moneyIn == 0 {
+				moneyOut, err = strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
+				check(err)
+				creditDebit = "debit"
+			}
 			amount := moneyIn - moneyOut
 			fmt.Printf("\"")
 			fmt.Printf(formattedDate)
