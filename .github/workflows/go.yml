@@ -18,11 +18,11 @@ jobs:
 
     - name: Get dependencies
       run: |
-        go get -v -t -d ./...
+        GO111MODULE=off go get -v -t -d ./...
         if [ -f Gopkg.toml ]; then
             curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
             dep ensure
         fi
 
     - name: Build
-      run: go build -v convert-to-quicken-csv.go
+      run: GO111MODULE=off go build -v convert-to-quicken-csv.go
