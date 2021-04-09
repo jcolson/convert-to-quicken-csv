@@ -46,17 +46,19 @@ Formats that can be converted
 
 ## how to build:
 
-```sh
-go build convert-to-quicken-csv.go
-```
-
-Build for universal binary on big sur
+This will build for whatever platform you are running on (creates a universal binary if you are building on Darwin)
 
 ```sh
-GOOS=darwin GOARCH=amd64 go build -o convert-to-quicken-csv-amd64 convert-to-quicken-csv.go && \
-GOOS=darwin GOARCH=arm64 go build -o convert-to-quicken-csv-arm64 convert-to-quicken-csv.go && \
-lipo -create -output convert-to-quicken-csv convert-to-quicken-csv-amd64 convert-to-quicken-csv-arm64
+make
 ```
+
+Build for all platforms
+
+```sh
+make all
+```
+
+binaries are generated in the `bin/` directory.
 
 ## Help on running
 
