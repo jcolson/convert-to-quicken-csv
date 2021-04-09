@@ -192,8 +192,10 @@ func open24CsvStuff(filename string, monthYear time.Time) {
 			// log.Printf("moneyIn: %f\n", moneyIn)
 			if err != nil || moneyIn == 0 {
 				moneyOut, err = strconv.ParseFloat(strings.Replace(record[3+columnIncrement], ",", "", -1), 64)
-				check(err)
 				creditDebit = "debit"
+				if err != nil {
+					log.Printf("error parsing moneyOut %f -- treating as 0.0 debit", moneyOut)
+				}
 			}
 			amount := moneyIn - moneyOut
 			fmt.Printf("\"")
