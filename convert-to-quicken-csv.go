@@ -50,13 +50,13 @@ func main() {
 }
 
 func revolutCsvStuff(filename string) {
-	inLayout := "Jan 2, 2006"
+	inLayout := "Jan 2 2006"
 	outLayout := "01/02/2006"
 	f, err := os.Open(filename)
 	check(err)
 	fileReader := bufio.NewReader(f)
 	r := csv.NewReader(fileReader)
-	r.Comma = ';'
+	r.Comma = ','
 	//read header line first and ignore it
 	r.Read()
 	fmt.Println("Date,Payee,FI Payee,Amount,CreditDebit,Category")
