@@ -6,8 +6,10 @@ import (
 	"flag"
 	"fmt"
 	"io"
+	"io/ioutil"
 	"log"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 	"time"
@@ -50,13 +52,20 @@ func main() {
 }
 
 func revolutCsvStuff(filename string) {
-	inLayout := "Jan 2 2006"
+	// revolut has spaces in front of some of their delimeters, which screws up golang's csv parser ... fix those first
+	regexFile(filename, " ,", []byte(","))
+
+	inLayout := "Jan 2, 2006"
 	outLayout := "01/02/2006"
 	f, err := os.Open(filename)
 	check(err)
 	fileReader := bufio.NewReader(f)
 	r := csv.NewReader(fileReader)
 	r.Comma = ','
+	// revolut uses quotes on just the date field
+	//r.LazyQuotes = true
+	// ignore field lengths (because revolut is a pita and doesn't output valid csv)
+	//r.FieldsPerRecord = -1
 	//read header line first and ignore it
 	r.Read()
 	fmt.Println("Date,Payee,FI Payee,Amount,CreditDebit,Category")
@@ -101,6 +110,40 @@ func revolutCsvStuff(filename string) {
 		fmt.Printf("\"")
 		fmt.Printf("\n")
 	}
+}
+
+// replace 'old' content in files with 'new' content
+func regexFile(filename string, old string, new []byte) {
+	f, err := os.Open(filename)
+	check(err)
+	defer f.Close()
+	// create temp file
+	tmp, err := ioutil.TempFile("", "replace-*")
+	check(err)
+	defer tmp.Close()
+	// replace while copying from f to tmp
+
+	sc := bufio.NewScanner(f)
+	rx := regexp.MustCompile(old)
+	for sc.Scan() {
+		line := sc.Bytes()
+		line = rx.ReplaceAll(line, new)
+		_, err := io.WriteString(tmp, string(line)+"\n")
+		check(err)
+	}
+	check(sc.Err())
+
+	// make sure the tmp file was successfully written to
+	err = tmp.Close()
+	check(err)
+
+	// close the file we're reading from
+	err = f.Close()
+	check(err)
+
+	// overwrite the original file with the temp file
+	err = os.Rename(tmp.Name(), filename)
+	check(err)
 }
 
 func banktivityCsvStuff(filename string) {
