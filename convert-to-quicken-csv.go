@@ -55,7 +55,8 @@ func revolutCsvStuff(filename string) {
 	// revolut has spaces in front of some of their delimeters, which screws up golang's csv parser ... fix those first
 	regexFile(filename, " ,", []byte(","))
 
-	inLayout := "Jan 2, 2006"
+	inLayout := "2006-01-02 15:04:05"
+	// inLayout := "Jan 2, 2006"
 	outLayout := "01/02/2006"
 	f, err := os.Open(filename)
 	check(err)
@@ -75,38 +76,32 @@ func revolutCsvStuff(filename string) {
 			break
 		}
 		check(err)
-		date, err := time.Parse(inLayout, strings.TrimSpace(record[0]))
+		date, err := time.Parse(inLayout, strings.TrimSpace(record[2]))
 		check(err)
 		formattedDate := date.Format(outLayout)
-		creditDebit := "x"
-		moneyOut, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[2]), ",", "", -1), 64)
-		if err != nil {
-			creditDebit = "credit"
-		}
-		moneyIn, err := strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[3]), ",", "", -1), 64)
-		if err != nil {
+		creditDebit := string([]rune(record[5])[0])
+		amount := float64(0)
+		if creditDebit == "-" {
 			creditDebit = "debit"
+			amountString := string([]rune(record[5])[1:])
+			amount, err = strconv.ParseFloat(strings.Replace(amountString, ",", "", -1), 64)
+		} else {
+			creditDebit = "credit"
+			amountString := record[5]
+			amount, err = strconv.ParseFloat(strings.Replace(amountString, ",", "", -1), 64)
 		}
-		if creditDebit == "x" {
-			moneyOut, err = strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[4]), ",", "", -1), 64)
-			if err != nil {
-				creditDebit = "credit"
-				moneyIn, err = strconv.ParseFloat(strings.Replace(strings.TrimSpace(record[5]), ",", "", -1), 64)
-			}
-		}
-		amount := moneyIn - moneyOut
 		fmt.Printf("\"")
 		fmt.Printf(formattedDate)
 		fmt.Printf("\",\"")
-		fmt.Printf(strings.TrimSpace(record[1]))
+		fmt.Printf(strings.TrimSpace(record[4]))
 		fmt.Printf("\",\"")
-		fmt.Printf(strings.TrimSpace(record[8]))
+		fmt.Printf(strings.TrimSpace(record[0]))
 		fmt.Printf("\",\"")
 		fmt.Printf("%f", amount)
 		fmt.Printf("\",\"")
 		fmt.Printf(creditDebit)
 		fmt.Printf("\",\"")
-		fmt.Printf(strings.TrimSpace(record[7]))
+		fmt.Printf(strings.TrimSpace(record[8]))
 		fmt.Printf("\"")
 		fmt.Printf("\n")
 	}

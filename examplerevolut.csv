@@ -1,17 +1,17 @@
-Completed Date ; Description ; Paid Out (EUR) ; Paid In (EUR) ; Exchange Out; Exchange In; Balance (EUR); Category; Notes
-Jun 22, 2020 ; To John Doe  ; 200.00 ;  ;  ;  ; 350.00; Transfers; 
-Jun 18, 2020 ; Top-Up by *1957 Fee: 5.84 ;  ; 350.00 ;  ;  ; 550.00; General; 
-Jun 15, 2020 ; To John Doe  ; 50.00 ;  ;  ;  ; 200.00; Transfers; Deposit for desk
-Jun 15, 2020 ; Top-Up by *1957 Fee: 4.17 ;  ; 250.00 ;  ;  ; 250.00; General; 
-Jun 9, 2020 ; To John Hancock  ; 50.00 ;  ;  ;  ; 0.00; Transfers; Deposit for table
-Jun 9, 2020 ; Top-Up by *1957 Fee: 0.65 ;  ; 39.10 ;  ;  ; 50.00; General; 
-Sep 15, 2019 ; To Ray Fen  ; 40.00 ;  ;  ;  ; 10.90; Transfers; 
-Sep 13, 2019 ; To Ray Fen  ; 50.00 ;  ;  ;  ; 50.90; Transfers; 
-Sep 11, 2019 ; The Pub  ; 53.50 ;  ;  ;  ; 100.90; Restaurants; 
-Sep 8, 2019 ; Top-up via Google Pay Fee: 1.66 ;  ; 90.00 ;  ;  ; 154.40; General; 
-Sep 8, 2019 ; To Ray Fen  ; 130.00 ;  ;  ;  ; 64.40; Transfers; 
-Sep 8, 2019 ; Exchange  to EUR FX Rate €1 = $1.1086 ;  ; 180.39 ;  USD 200.00 ;  ; 194.40; General; 
-Aug 19, 2019 ; To Ray Fen  ; 10.00 ;  ;  ;  ; 14.01; Transfers; 
-Aug 17, 2019 ; From Ray Fen  ;  ; 5.00 ;  ;  ; 24.01; Transfers; 
-Aug 17, 2019 ; To Ray Fen  ; 15.00 ;  ;  ;  ; 19.01; Transfers; 
-Aug 17, 2019 ; Top-up via Google Pay  ;  ; 30.00 ;  ;  ; 34.01; General; 
+Type,Product,Started Date,Completed Date,Description,Amount,Fee,Currency,State,Balance
+TOPUP,Current,2021-10-08 17:50:59,2021-10-08 17:51:04,Auto Top-Up by *2771,300.00,0.00,EUR,COMPLETED,502.23
+CARD_PAYMENT,Current,2021-10-07 20:19:29,2021-10-09 12:25:34,Harold House,-10.40,0.00,EUR,COMPLETED,491.83
+CARD_PAYMENT,Current,2021-10-07 20:41:14,2021-10-09 12:25:34,Harold House,-14.40,0.00,EUR,COMPLETED,477.43
+CARD_PAYMENT,Current,2021-10-07 19:58:20,2021-10-09 12:25:34,Harold House,-10.40,0.00,EUR,COMPLETED,467.03
+CARD_PAYMENT,Current,2021-10-08 17:50:58,2021-10-10 10:59:47,Leonards Corner,-10.80,0.00,EUR,COMPLETED,456.23
+CARD_PAYMENT,Current,2021-10-08 17:12:04,2021-10-10 10:59:47,Leonards Corner,-13.60,0.00,EUR,COMPLETED,442.63
+CARD_PAYMENT,Current,2021-10-09 10:51:33,2021-10-10 11:39:43,Killruddery House And Gar,-34.00,0.00,EUR,COMPLETED,408.63
+CARD_PAYMENT,Current,2021-10-09 11:58:07,2021-10-10 11:39:43,Killruddery House And Gar,-3.50,0.00,EUR,COMPLETED,405.13
+CARD_PAYMENT,Current,2021-10-09 12:22:00,2021-10-10 11:46:01,Bullet Duck And Dumpling,-10.00,0.00,EUR,COMPLETED,395.13
+CARD_PAYMENT,Current,2021-10-09 12:19:44,2021-10-10 13:07:53,The Jungle Food Com,-12.00,0.00,EUR,COMPLETED,383.13
+CARD_PAYMENT,Current,2021-10-09 12:41:03,2021-10-12 03:37:38,Sumup  *the Crepe Box,-2.00,0.00,EUR,COMPLETED,381.13
+CARD_PAYMENT,Current,2021-10-09 12:16:53,2021-10-12 03:37:38,Sumup  *vera Foods,-7.00,0.00,EUR,COMPLETED,374.13
+CARD_PAYMENT,Current,2021-10-09 12:15:47,2021-10-12 03:37:38,Sumup  *vera Foods,-35.00,0.00,EUR,COMPLETED,339.13
+CARD_PAYMENT,Current,2021-10-10 16:01:23,2021-10-12 05:29:25,57 The Head Line,-12.00,0.00,EUR,COMPLETED,327.13
+CARD_PAYMENT,Current,2021-10-10 18:48:53,2021-10-12 09:40:52,Oneils Next Door,-29.99,0.00,EUR,COMPLETED,297.14
+TOPUP,Current,2021-10-15 09:24:37,2021-10-15 09:24:39,Auto Top-Up by *2771,300.00,0.00,EUR,COMPLETED,457.14
