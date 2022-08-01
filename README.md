@@ -63,6 +63,8 @@ binaries are generated in the `bin/` directory.
 ## Help on running
 
 ```sh
+./convert-to-quicken-csv -h
+
 Usage of ./convert-to-quicken-csv:
   -dates string
         Year/Month, default is previous month (default "2021/1")
@@ -72,6 +74,26 @@ Usage of ./convert-to-quicken-csv:
   -type string
         Input format type.  Available options: open24, banktivity, revolut (default "open24")
 ```
+
+### Open24
+
+If you'd like to convert a downloaded open24 file, this is the syntax:
+
+```sh
+./convert-to-quicken-csv-darwin-universal -input ~/Downloads/your_downloaded_PERMANENT_TSB.csv -type open24 > the_new_PERMANENT_TSB_quicken_file.csv
+```
+
+You can now 'drag and drop' the `the_new_PERMANENT_TSB_quicken_file.csv` right into Quicken.  Quicken will create a new 'account' with all the transactions.  Just select all of the transactions in that account and copy them.  Then paste them into your actual Permanent TSB Account.
+
+### Revolut
+
+If you'd like to convert a downloaded Revolut file, this is the syntax:
+
+```sh
+./convert-to-quicken-csv-darwin-universal -input ~/Downloads/your_downloaded_REVOLUT.csv -type revolut > the_new_REVOLUT_quicken_file.csv
+```
+
+And so forth and so on ...
 
 ## Run on test file
 
