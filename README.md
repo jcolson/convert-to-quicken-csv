@@ -8,6 +8,8 @@
   - [Application usage](#application-usage)
   - [how to build:](#how-to-build)
   - [Help on running](#help-on-running)
+    - [Open24](#open24)
+    - [Revolut](#revolut)
   - [Run on test file](#run-on-test-file)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
